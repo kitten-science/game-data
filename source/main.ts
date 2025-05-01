@@ -132,4 +132,4 @@ const main = async () => {
   process.stderr.write("Done.\n");
 };
 
-main().catch(redirectErrorsToConsole(console));
+main().catch(e=>{throw e;});
