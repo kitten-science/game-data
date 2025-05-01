@@ -1,8 +1,8 @@
 .PHONY: default build clean docs git-hook pretty lint test run
 
-default: build
+default: build data lib
 
-build: data lib
+build: output
 
 clean:
 	rm --force --recursive data kittensgame lib node_modules output tsconfig.tsbuildinfo
