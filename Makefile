@@ -5,7 +5,7 @@ default: build
 build: output
 
 clean:
-	rm --force --recursive kittensgame node_modules output tsconfig.tsbuildinfo
+	rm --force --recursive kittensgame lib node_modules output tsconfig.tsbuildinfo
 
 docs:
 	@echo "No documentation included by default."
@@ -28,8 +28,8 @@ run: output kittensgame
 	node output/main.js kittensgame
 
 data: output kittensgame
-	@rm -rf data; mkdir data
-	cd data; node ../output/main.js ../kittensgame
+	@rm -rf lib; mkdir lib
+	cd lib; node ../output/main.js ../kittensgame
 
 node_modules:
 	yarn install

@@ -10,18 +10,25 @@ import { redirectErrorsToConsole } from "@oliversalzburg/js-utils/errors/console
 import { shimScience } from "./shim-science.js";
 
 const dumpPolicies = (root: Array<UnsafePolicy>) => {
-  dumpAnyToFile("policies.json", Object.fromEntries(root.map(_ => [_.name, _])));
+  dumpAnyToFile("policies.js", Object.fromEntries(root.map(_ => [_.name, _])));
 };
 const dumpTechs = (root: Array<UnsafeTech>) => {
-  dumpAnyToFile("techs.json", Object.fromEntries(root.map(_ => [_.name, _])));
+  dumpAnyToFile("techs.js", Object.fromEntries(root.map(_ => [_.name, _])));
 };
 const dumpUpgrades = (root: Array<UnsafeUpgrade>) => {
-  dumpAnyToFile("upgrades.json", Object.fromEntries(root.map(_ => [_.name, _])));
+  dumpAnyToFile("upgrades.js", Object.fromEntries(root.map(_ => [_.name, _])));
 };
 const dumpAnyToFile = (filename: string, content: unknown) => {
   const hashJson = JSON.stringify(content, undefined, 4);
-  writeFileSync(filename, hashJson + "\n");
+  writeFileSync(filename, `export default ${hashJson};\n`);
 };
+
+const index = [
+  `import policies from "./policies.js";`,
+  `import techs from "./techs.js";`,
+  `import upgrades from "./upgrades.js";`,
+  `export { policies,techs,updates };\n`,
+];
 
 const gameRoot = process.argv[2] ?? process.cwd();
 
@@ -57,6 +64,8 @@ const main = async () => {
   await import(resolve(join(gameRoot, "./js/science.js")));
 
   await import(resolve(join(gameRoot, "./js/workshop.js")));
+
+  writeFileSync("index.js", index.join("\n"));
   process.stderr.write("Done.\n");
 };
 
