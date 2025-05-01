@@ -1,9 +1,10 @@
 name: QA Main
 
 on:
-  push:
-    branches:
-      - "main"
+  workflow_call:
+  pull_request_review:
+    types:
+      - submitted
 
 jobs:
   qa:

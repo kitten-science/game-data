@@ -1,11 +1,10 @@
 name: Generate
 
 on:
-  workflow_run:
-    types:
-      - completed
-    workflows:
-      - QA Main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 concurrency: publish
 
@@ -15,7 +14,6 @@ env:
 
 jobs:
   publish:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: write
       pull-requests: write
@@ -57,3 +55,4 @@ jobs:
           branch: feat/metadata-master
           title: Metadata Update for master
           assignees: oliversalzburg
+          sign-commits: true
