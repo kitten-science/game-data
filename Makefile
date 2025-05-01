@@ -5,7 +5,7 @@ default: build data lib
 build: output
 
 clean:
-	rm --force --recursive data kittensgame lib node_modules output tsconfig.tsbuildinfo
+	rm --force --recursive data kittensgame node_modules output tsconfig.tsbuildinfo
 
 docs:
 	@echo "No documentation included by default."
