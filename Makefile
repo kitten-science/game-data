@@ -5,13 +5,13 @@ default: build
 build: output
 
 clean:
-	rm --force --recursive node_modules output tsconfig.tsbuildinfo
+	rm --force --recursive kittensgame node_modules output tsconfig.tsbuildinfo
 
 docs:
 	@echo "No documentation included by default."
 
 git-hook:
-	echo "make pretty" > .git/hooks/pre-commit
+	echo "make pretty" > .git/hooks/pre-commit; chmod +x .git/hooks/pre-commit
 
 pretty: node_modules
 	yarn biome check --write --no-errors-on-unmatched
@@ -22,15 +22,20 @@ lint: node_modules
 	yarn tsc --noEmit
 
 test:
-	yarn tsc
-	yarn c8 --reporter=html-spa mocha output/*.test.js
+	@echo "There are no tests here :'("
 
-run: build
-	node ./output/main.js
+run: output kittensgame
+	node output/main.js kittensgame
 
+data: output kittensgame
+	@rm -rf data; mkdir data
+	cd data; node ../output/main.js ../kittensgame
 
 node_modules:
 	yarn install
 
-output: node_modules
+output: node_modules kittensgame
 	node build.js
+
+kittensgame:
+	git clone --branch "master" --single-branch "https://github.com/nuclear-unicorn/kittensgame.git"

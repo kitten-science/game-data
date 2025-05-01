@@ -8,6 +8,7 @@
 
 build/
 coverage/
+kittensgame/
 node_modules/
 output/
 tsconfig.tsbuildinfo
