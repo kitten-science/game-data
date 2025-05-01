@@ -20,6 +20,9 @@
   "exports": {
     "./*.js": {
       "default": "./lib/*.js"
+    },
+    ".": {
+      "default": "./lib/index.js"
     }
   },
   "devDependencies": {
