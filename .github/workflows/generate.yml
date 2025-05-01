@@ -45,7 +45,8 @@ jobs:
 
       - name: Generate Data
         run: |
-          make data
+          rm -rf lib
+          make data lib
           make pretty
 
       - name: Create Pull Request

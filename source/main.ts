@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import {
+import type {
   UnsafeCraft,
   UnsafePolicy,
   UnsafeTech,
@@ -27,7 +27,7 @@ const index = [
   `import techs from "./techs.js";`,
   `import upgrades from "./upgrades.js";`,
   `import zebraUpgrades from "./zebraUpgrades.js";`,
-  `export { crafts,policies,techs,upgrades,zebraUpgrades };\n`,
+  "export { crafts, policies, techs, upgrades, zebraUpgrades };\n",
 ];
 
 const gameRoot = process.argv[2];
