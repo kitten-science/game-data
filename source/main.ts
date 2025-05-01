@@ -16,7 +16,9 @@ const metadataToHash = (
 ) => Object.fromEntries(root.map(_ => [_.name, _]));
 const dumpAnyToFile = (filename: string, content: unknown) => {
   const hashJson = JSON.stringify(content, undefined, 4);
-  writeFileSync(filename, `export default ${hashJson};\n`);
+  const filenameSuffixed = `${filename}.${fileFormat === "esm" ? "js" : "json"}`;
+  const payload = fileFormat === "esm" ? `export default ${hashJson};\n` : `${hashJson}\n`;
+  writeFileSync(filenameSuffixed, payload);
 };
 
 const index = [
@@ -28,7 +30,9 @@ const index = [
   `export { crafts,policies,techs,upgrades,zebraUpgrades };\n`,
 ];
 
-const gameRoot = process.argv[2] ?? process.cwd();
+const gameRoot = process.argv[2];
+const args = process.argv.slice(3);
+const fileFormat = args.includes("--json") ? "json" : "esm";
 
 const main = async () => {
   const literalsRaw = readFileSync(resolve(join(gameRoot, "./res/i18n/en.json")), "utf8");
@@ -52,14 +56,14 @@ const main = async () => {
         ) => {
           switch (id) {
             case "classes.managers.WorkshopManager":
-              dumpAnyToFile("crafts.js", metadataToHash(mustExist(decl.crafts)));
-              dumpAnyToFile("upgrades.js", metadataToHash(mustExist(decl.upgrades)));
-              dumpAnyToFile("zebraUpgrades.js", metadataToHash(mustExist(decl.zebraUpgrades)));
+              dumpAnyToFile("crafts", metadataToHash(mustExist(decl.crafts)));
+              dumpAnyToFile("upgrades", metadataToHash(mustExist(decl.upgrades)));
+              dumpAnyToFile("zebraUpgrades", metadataToHash(mustExist(decl.zebraUpgrades)));
 
               break;
             case "classes.managers.ScienceManager":
-              dumpAnyToFile("policies.js", metadataToHash(mustExist(decl.policies)));
-              dumpAnyToFile("techs.js", metadataToHash(mustExist(decl.techs)));
+              dumpAnyToFile("policies", metadataToHash(mustExist(decl.policies)));
+              dumpAnyToFile("techs", metadataToHash(mustExist(decl.techs)));
               break;
           }
         },
@@ -71,7 +75,9 @@ const main = async () => {
 
   await import(resolve(join(gameRoot, "./js/workshop.js")));
 
-  writeFileSync("index.js", index.join("\n"));
+  if (fileFormat === "esm") {
+    writeFileSync("index.js", index.join("\n"));
+  }
   process.stderr.write("Done.\n");
 };
 

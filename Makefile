@@ -2,10 +2,10 @@
 
 default: build
 
-build: output
+build: data lib
 
 clean:
-	rm --force --recursive kittensgame lib node_modules output tsconfig.tsbuildinfo
+	rm --force --recursive data kittensgame lib node_modules output tsconfig.tsbuildinfo
 
 docs:
 	@echo "No documentation included by default."
@@ -28,7 +28,11 @@ run: output kittensgame
 	node output/main.js kittensgame
 
 data: output kittensgame
-	@rm -rf lib; mkdir lib
+	@mkdir data
+	cd data; node ../output/main.js ../kittensgame --json
+
+lib: output kittensgame
+	@mkdir lib
 	cd lib; node ../output/main.js ../kittensgame
 
 node_modules:
