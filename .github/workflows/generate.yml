@@ -50,3 +50,8 @@ jobs:
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7.0.8
+        with:
+          commit-message: "feat: Update metadata snapshots"
+          branch: feat/metadata-master
+          title: Metadata Update for master
+          assignees: oliversalzburg

@@ -1,6 +1,5 @@
 import { writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { cwd } from "node:process";
 import { UnsafeTech, UnsafeUpgrade } from "@kitten-science/kitten-scientists/types/index.js";
 import { mustExist } from "@oliversalzburg/js-utils/data/nil.js";
 import { redirectErrorsToConsole } from "@oliversalzburg/js-utils/errors/console.js";
@@ -8,12 +7,12 @@ import { shimScience } from "./shim-science.js";
 
 const dumpTechs = (techs: Array<UnsafeTech>) => {
   const hash = Object.fromEntries(techs.map(_ => [_.name, _]));
-  const hashJson = JSON.stringify(hash);
+  const hashJson = JSON.stringify(hash, undefined, 4);
   writeFileSync("techs.json", hashJson + "\n");
 };
 const dumpUpgrades = (upgrades: Array<UnsafeUpgrade>) => {
   const hash = Object.fromEntries(upgrades.map(_ => [_.name, _]));
-  const hashJson = JSON.stringify(hash);
+  const hashJson = JSON.stringify(hash, undefined, 4);
   writeFileSync("upgrades.json", hashJson + "\n");
 };
 
