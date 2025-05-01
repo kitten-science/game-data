@@ -1,4 +1,4 @@
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import {
   UnsafePolicy,
@@ -9,15 +9,15 @@ import { mustExist } from "@oliversalzburg/js-utils/data/nil.js";
 import { redirectErrorsToConsole } from "@oliversalzburg/js-utils/errors/console.js";
 import { shimScience } from "./shim-science.js";
 
-const dumpPolicies = (root: Array<UnsafePolicy>) => {
+const dumpPolicies = (root: Array<UnsafePolicy>) =>
   dumpAnyToFile("policies.js", Object.fromEntries(root.map(_ => [_.name, _])));
-};
-const dumpTechs = (root: Array<UnsafeTech>) => {
+
+const dumpTechs = (root: Array<UnsafeTech>) =>
   dumpAnyToFile("techs.js", Object.fromEntries(root.map(_ => [_.name, _])));
-};
-const dumpUpgrades = (root: Array<UnsafeUpgrade>) => {
+
+const dumpUpgrades = (root: Array<UnsafeUpgrade>) =>
   dumpAnyToFile("upgrades.js", Object.fromEntries(root.map(_ => [_.name, _])));
-};
+
 const dumpAnyToFile = (filename: string, content: unknown) => {
   const hashJson = JSON.stringify(content, undefined, 4);
   writeFileSync(filename, `export default ${hashJson};\n`);
@@ -33,10 +33,13 @@ const index = [
 const gameRoot = process.argv[2] ?? process.cwd();
 
 const main = async () => {
+  const literalsRaw = readFileSync(resolve(join(gameRoot, "./res/i18n/en.json")), "utf8");
+  const literals = JSON.parse(literalsRaw);
+
   Object.assign(
     globalThis,
     {
-      $I: () => "",
+      $I: (literal: string, ..._args: Array<unknown>) => literals[literal] ?? "",
       dojo: {
         declare: (
           id: string,
