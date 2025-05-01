@@ -4,7 +4,19 @@
   "version": "0.0.1",
   "license": "MIT",
   "author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
+  "homepage": "https://github.com/kitten-science/game-data",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kitten-science/game-data.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kitten-science/game-data/issues"
+  },
   "type": "module",
+  "scripts": {
+    "preversion": "make lint test",
+    "postversion": "git push"
+  },
   "exports": {
     "./*.js": {
       "default": "./lib/*.js"
@@ -22,6 +34,12 @@
     "esbuild": "0.25.3",
     "mocha": "11.1.0",
     "typescript": "5.8.3"
+  },
+  "keywords": [
+    "kittensgame"
+  ],
+  "engines": {
+    "node": ">= 20"
   },
   "packageManager": "yarn@4.9.1",
   "files": [
