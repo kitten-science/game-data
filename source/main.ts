@@ -1,33 +1,31 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import {
+  UnsafeCraft,
   UnsafePolicy,
   UnsafeTech,
   UnsafeUpgrade,
+  UnsafeZebraUpgrade,
 } from "@kitten-science/kitten-scientists/types/index.js";
 import { mustExist } from "@oliversalzburg/js-utils/data/nil.js";
 import { redirectErrorsToConsole } from "@oliversalzburg/js-utils/errors/console.js";
 import { shimScience } from "./shim-science.js";
 
-const dumpPolicies = (root: Array<UnsafePolicy>) =>
-  dumpAnyToFile("policies.js", Object.fromEntries(root.map(_ => [_.name, _])));
-
-const dumpTechs = (root: Array<UnsafeTech>) =>
-  dumpAnyToFile("techs.js", Object.fromEntries(root.map(_ => [_.name, _])));
-
-const dumpUpgrades = (root: Array<UnsafeUpgrade>) =>
-  dumpAnyToFile("upgrades.js", Object.fromEntries(root.map(_ => [_.name, _])));
-
+const metadataToHash = (
+  root: Array<UnsafeCraft | UnsafePolicy | UnsafeTech | UnsafeUpgrade | UnsafeZebraUpgrade>,
+) => Object.fromEntries(root.map(_ => [_.name, _]));
 const dumpAnyToFile = (filename: string, content: unknown) => {
   const hashJson = JSON.stringify(content, undefined, 4);
   writeFileSync(filename, `export default ${hashJson};\n`);
 };
 
 const index = [
+  `import crafts from "./crafts.js";`,
   `import policies from "./policies.js";`,
   `import techs from "./techs.js";`,
   `import upgrades from "./upgrades.js";`,
-  `export { policies,techs,upgrades };\n`,
+  `import zebraUpgrades from "./zebraUpgrades.js";`,
+  `export { crafts,policies,techs,upgrades,zebraUpgrades };\n`,
 ];
 
 const gameRoot = process.argv[2] ?? process.cwd();
@@ -45,18 +43,23 @@ const main = async () => {
           id: string,
           _supers: unknown,
           decl: {
+            crafts?: Array<UnsafeCraft>;
             policies?: Array<UnsafePolicy>;
             techs?: Array<UnsafeTech>;
             upgrades?: Array<UnsafeUpgrade>;
+            zebraUpgrades?: Array<UnsafeZebraUpgrade>;
           },
         ) => {
           switch (id) {
             case "classes.managers.WorkshopManager":
-              dumpUpgrades(mustExist(decl.upgrades));
+              dumpAnyToFile("crafts.js", metadataToHash(mustExist(decl.crafts)));
+              dumpAnyToFile("upgrades.js", metadataToHash(mustExist(decl.upgrades)));
+              dumpAnyToFile("zebraUpgrades.js", metadataToHash(mustExist(decl.zebraUpgrades)));
+
               break;
             case "classes.managers.ScienceManager":
-              dumpPolicies(mustExist(decl.policies));
-              dumpTechs(mustExist(decl.techs));
+              dumpAnyToFile("policies.js", metadataToHash(mustExist(decl.policies)));
+              dumpAnyToFile("techs.js", metadataToHash(mustExist(decl.techs)));
               break;
           }
         },
