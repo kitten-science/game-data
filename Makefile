@@ -32,7 +32,7 @@ data: output kittensgame
 	cd data; node ../output/main.js ../kittensgame --json
 
 lib: output kittensgame
-	@mkdir lib || rm -rf lib && mkdir lib
+	@mkdir lib || true
 	cd lib; node ../output/main.js ../kittensgame
 
 node_modules:
