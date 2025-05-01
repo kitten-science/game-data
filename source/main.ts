@@ -27,7 +27,7 @@ const index = [
   `import policies from "./policies.js";`,
   `import techs from "./techs.js";`,
   `import upgrades from "./upgrades.js";`,
-  `export { policies,techs,updates };\n`,
+  `export { policies,techs,upgrades };\n`,
 ];
 
 const gameRoot = process.argv[2] ?? process.cwd();
