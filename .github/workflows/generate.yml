@@ -46,7 +46,9 @@ jobs:
             ${{ runner.os }}-node${{ env.NODE_VERSION }}
 
       - name: Generate Data
-        run: make data
+        run: |
+          make data
+          make pretty
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7.0.8
