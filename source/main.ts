@@ -1,19 +1,26 @@
 import { writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { UnsafeTech, UnsafeUpgrade } from "@kitten-science/kitten-scientists/types/index.js";
+import {
+  UnsafePolicy,
+  UnsafeTech,
+  UnsafeUpgrade,
+} from "@kitten-science/kitten-scientists/types/index.js";
 import { mustExist } from "@oliversalzburg/js-utils/data/nil.js";
 import { redirectErrorsToConsole } from "@oliversalzburg/js-utils/errors/console.js";
 import { shimScience } from "./shim-science.js";
 
-const dumpTechs = (techs: Array<UnsafeTech>) => {
-  const hash = Object.fromEntries(techs.map(_ => [_.name, _]));
-  const hashJson = JSON.stringify(hash, undefined, 4);
-  writeFileSync("techs.json", hashJson + "\n");
+const dumpPolicies = (root: Array<UnsafePolicy>) => {
+  dumpAnyToFile("policies.json", Object.fromEntries(root.map(_ => [_.name, _])));
 };
-const dumpUpgrades = (upgrades: Array<UnsafeUpgrade>) => {
-  const hash = Object.fromEntries(upgrades.map(_ => [_.name, _]));
-  const hashJson = JSON.stringify(hash, undefined, 4);
-  writeFileSync("upgrades.json", hashJson + "\n");
+const dumpTechs = (root: Array<UnsafeTech>) => {
+  dumpAnyToFile("techs.json", Object.fromEntries(root.map(_ => [_.name, _])));
+};
+const dumpUpgrades = (root: Array<UnsafeUpgrade>) => {
+  dumpAnyToFile("upgrades.json", Object.fromEntries(root.map(_ => [_.name, _])));
+};
+const dumpAnyToFile = (filename: string, content: unknown) => {
+  const hashJson = JSON.stringify(content, undefined, 4);
+  writeFileSync(filename, hashJson + "\n");
 };
 
 const gameRoot = process.argv[2] ?? process.cwd();
@@ -27,13 +34,18 @@ const main = async () => {
         declare: (
           id: string,
           _supers: unknown,
-          decl: { techs?: Array<UnsafeTech>; upgrades?: Array<UnsafeUpgrade> },
+          decl: {
+            policies?: Array<UnsafePolicy>;
+            techs?: Array<UnsafeTech>;
+            upgrades?: Array<UnsafeUpgrade>;
+          },
         ) => {
           switch (id) {
             case "classes.managers.WorkshopManager":
               dumpUpgrades(mustExist(decl.upgrades));
               break;
             case "classes.managers.ScienceManager":
+              dumpPolicies(mustExist(decl.policies));
               dumpTechs(mustExist(decl.techs));
               break;
           }
