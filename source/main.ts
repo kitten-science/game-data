@@ -14,7 +14,6 @@ import type {
   UnsafeZigguratUpgrade,
 } from "@kitten-science/kitten-scientists/types/index.js";
 import { mustExist } from "@oliversalzburg/js-utils/data/nil.js";
-import { redirectErrorsToConsole } from "@oliversalzburg/js-utils/errors/console.js";
 import { shimScience } from "./shim-science.js";
 
 const metadataToHash = (
@@ -132,4 +131,6 @@ const main = async () => {
   process.stderr.write("Done.\n");
 };
 
-main().catch(e=>{throw e;});
+main().catch(e => {
+  throw e;
+});
