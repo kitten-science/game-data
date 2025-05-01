@@ -1,6 +1,8 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import type {
+  UnsafeAchievement,
+  UnsafeBadge,
   UnsafeCraft,
   UnsafePolicy,
   UnsafeTech,
@@ -12,7 +14,15 @@ import { redirectErrorsToConsole } from "@oliversalzburg/js-utils/errors/console
 import { shimScience } from "./shim-science.js";
 
 const metadataToHash = (
-  root: Array<UnsafeCraft | UnsafePolicy | UnsafeTech | UnsafeUpgrade | UnsafeZebraUpgrade>,
+  root: Array<
+    | UnsafeAchievement
+    | UnsafeCraft
+    | UnsafeBadge
+    | UnsafePolicy
+    | UnsafeTech
+    | UnsafeUpgrade
+    | UnsafeZebraUpgrade
+  >,
 ) => Object.fromEntries(root.map(_ => [_.name, _]));
 const dumpAnyToFile = (filename: string, content: unknown) => {
   const hashJson = JSON.stringify(content, undefined, 4);
@@ -22,12 +32,14 @@ const dumpAnyToFile = (filename: string, content: unknown) => {
 };
 
 const index = [
+  `import achievements from "./achievements.js";`,
+  `import badges from "./badges.js";`,
   `import crafts from "./crafts.js";`,
   `import policies from "./policies.js";`,
   `import techs from "./techs.js";`,
   `import upgrades from "./upgrades.js";`,
   `import zebraUpgrades from "./zebraUpgrades.js";`,
-  "export { crafts, policies, techs, upgrades, zebraUpgrades };\n",
+  "export { achievements, badges, crafts, policies, techs, upgrades, zebraUpgrades };\n",
 ];
 
 const gameRoot = process.argv[2];
@@ -47,6 +59,8 @@ const main = async () => {
           id: string,
           _supers: unknown,
           decl: {
+            achievements?: Array<UnsafeAchievement>;
+            badges?: Array<UnsafeBadge>;
             crafts?: Array<UnsafeCraft>;
             policies?: Array<UnsafePolicy>;
             techs?: Array<UnsafeTech>;
@@ -55,6 +69,11 @@ const main = async () => {
           },
         ) => {
           switch (id) {
+            case "classes.managers.Achievements":
+              dumpAnyToFile("achievements", metadataToHash(mustExist(decl.achievements)));
+              dumpAnyToFile("badges", metadataToHash(mustExist(decl.badges)));
+              break;
+
             case "classes.managers.WorkshopManager":
               dumpAnyToFile("crafts", metadataToHash(mustExist(decl.crafts)));
               dumpAnyToFile("upgrades", metadataToHash(mustExist(decl.upgrades)));
@@ -71,8 +90,9 @@ const main = async () => {
     },
     shimScience,
   );
-  await import(resolve(join(gameRoot, "./js/science.js")));
 
+  await import(resolve(join(gameRoot, "./js/achievements.js")));
+  await import(resolve(join(gameRoot, "./js/science.js")));
   await import(resolve(join(gameRoot, "./js/workshop.js")));
 
   if (fileFormat === "esm") {
