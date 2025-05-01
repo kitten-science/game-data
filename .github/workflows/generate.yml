@@ -14,6 +14,12 @@ env:
 
 jobs:
   publish:
+    strategy:
+      matrix:
+        branch:
+          - master
+          - dev/beta
+          - dev/alpha
     permissions:
       contents: write
       pull-requests: write
@@ -45,6 +51,7 @@ jobs:
 
       - name: Generate Data
         run: |
+          git clone --branch "${{ matrix.branch }}" --depth 1 --single-branch "https://github.com/nuclear-unicorn/kittensgame.git"
           rm -rf lib
           make lib
           make pretty
@@ -53,7 +60,7 @@ jobs:
         uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
         with:
           commit-message: "feat: Update metadata snapshots"
-          branch: feat/metadata-master
-          title: Metadata Update for master
+          branch: feat/metadata/${{ matrix.branch }}
+          title: Metadata Update for ${{ matrix.branch }}
           assignees: oliversalzburg
           sign-commits: true
