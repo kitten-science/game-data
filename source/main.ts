@@ -5,7 +5,9 @@ import type {
   UnsafeBadge,
   UnsafeBuilding,
   UnsafeCraft,
+  UnsafeJob,
   UnsafePolicy,
+  UnsafeRace,
   UnsafeReligionUpgrade,
   UnsafeTech,
   UnsafeTranscendenceUpgrade,
@@ -22,7 +24,9 @@ const metadataToHash = (
     | UnsafeBadge
     | UnsafeBuilding
     | UnsafeCraft
+    | UnsafeJob
     | UnsafePolicy
+    | UnsafeRace
     | UnsafeReligionUpgrade
     | UnsafeTech
     | UnsafeTranscendenceUpgrade
@@ -43,6 +47,8 @@ const index = [
   `import badges from "./badges.js";`,
   `import buildings from "./buildings.js";`,
   `import crafts from "./crafts.js";`,
+  `import jobs from "./jobs.js";`,
+  `import races from "./races.js";`,
   `import policies from "./policies.js";`,
   `import religionUpgrades from "./religionUpgrades.js";`,
   `import techs from "./techs.js";`,
@@ -50,7 +56,7 @@ const index = [
   `import upgrades from "./upgrades.js";`,
   `import zebraUpgrades from "./zebraUpgrades.js";`,
   `import zigguratUpgrades from "./zigguratUpgrades.js";`,
-  "export { achievements, badges, buildings, crafts, policies, religionUpgrades, techs, transcendenceUpgrades, upgrades, zebraUpgrades, zigguratUpgrades };\n",
+  "export { achievements, badges, buildings, crafts, jobs, policies, races, religionUpgrades, techs, transcendenceUpgrades, upgrades, zebraUpgrades, zigguratUpgrades };\n",
 ];
 
 const gameRoot = process.argv[2];
@@ -74,7 +80,9 @@ const main = async () => {
             badges?: Array<UnsafeBadge>;
             buildingsData?: Array<UnsafeBuilding>;
             crafts?: Array<UnsafeCraft>;
+            jobs?: Array<UnsafeJob>;
             policies?: Array<UnsafePolicy>;
+            races?: Array<UnsafeRace>;
             religionUpgrades?: Array<UnsafeReligionUpgrade>;
             techs?: Array<UnsafeTech>;
             upgrades?: Array<UnsafeUpgrade>;
@@ -93,6 +101,10 @@ const main = async () => {
               dumpAnyToFile("buildings", metadataToHash(mustExist(decl.buildingsData)));
               break;
 
+            case "classes.managers.DiplomacyManager":
+              dumpAnyToFile("races", metadataToHash(mustExist(decl.races)));
+              break;
+
             case "classes.managers.ReligionManager":
               dumpAnyToFile("zigguratUpgrades", metadataToHash(mustExist(decl.zigguratUpgrades)));
               dumpAnyToFile("religionUpgrades", metadataToHash(mustExist(decl.religionUpgrades)));
@@ -105,6 +117,10 @@ const main = async () => {
             case "classes.managers.ScienceManager":
               dumpAnyToFile("policies", metadataToHash(mustExist(decl.policies)));
               dumpAnyToFile("techs", metadataToHash(mustExist(decl.techs)));
+              break;
+
+            case "classes.managers.VillageManager":
+              dumpAnyToFile("jobs", metadataToHash(mustExist(decl.jobs)));
               break;
 
             case "classes.managers.WorkshopManager":
@@ -121,8 +137,10 @@ const main = async () => {
 
   await import(resolve(join(gameRoot, "./js/achievements.js")));
   await import(resolve(join(gameRoot, "./js/buildings.js")));
+  await import(resolve(join(gameRoot, "./js/diplomacy.js")));
   await import(resolve(join(gameRoot, "./js/religion.js")));
   await import(resolve(join(gameRoot, "./js/science.js")));
+  await import(resolve(join(gameRoot, "./js/village.js")));
   await import(resolve(join(gameRoot, "./js/workshop.js")));
 
   if (fileFormat === "esm") {
