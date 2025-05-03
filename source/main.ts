@@ -8,9 +8,11 @@ import type {
   UnsafeJob,
   UnsafePact,
   UnsafePerk,
+  UnsafePlanet,
   UnsafePolicy,
   UnsafeRace,
   UnsafeReligionUpgrade,
+  UnsafeSpaceProgram,
   UnsafeTech,
   UnsafeTranscendenceUpgrade,
   UnsafeUpgrade,
@@ -29,9 +31,11 @@ const metadataToHash = (
     | UnsafeJob
     | UnsafePact
     | UnsafePerk
+    | UnsafePlanet
     | UnsafePolicy
     | UnsafeRace
     | UnsafeReligionUpgrade
+    | UnsafeSpaceProgram
     | UnsafeTech
     | UnsafeTranscendenceUpgrade
     | UnsafeUpgrade
@@ -54,7 +58,9 @@ const fragments = [
   "jobs",
   "races",
   "perks",
+  "planets",
   "policies",
+  "programs",
   "religionUpgrades",
   "techs",
   "transcendenceUpgrades",
@@ -92,7 +98,9 @@ const main = async () => {
             jobs?: Array<UnsafeJob>;
             pacts?: Array<UnsafePact>;
             perks?: Array<UnsafePerk>;
+            planets?: Array<UnsafePlanet>;
             policies?: Array<UnsafePolicy>;
+            programs?: Array<UnsafeSpaceProgram>;
             races?: Array<UnsafeRace>;
             religionUpgrades?: Array<UnsafeReligionUpgrade>;
             techs?: Array<UnsafeTech>;
@@ -138,6 +146,11 @@ const main = async () => {
               dumpAnyToFile("techs", metadataToHash(mustExist(decl.techs)));
               break;
 
+            case "classes.managers.SpaceManager":
+              dumpAnyToFile("programs", metadataToHash(mustExist(decl.programs)));
+              dumpAnyToFile("planets", metadataToHash(mustExist(decl.planets)));
+              break;
+
             case "classes.managers.VillageManager":
               dumpAnyToFile("jobs", metadataToHash(mustExist(decl.jobs)));
               break;
@@ -160,6 +173,7 @@ const main = async () => {
   await import(resolve(join(gameRoot, "./js/prestige.js")));
   await import(resolve(join(gameRoot, "./js/religion.js")));
   await import(resolve(join(gameRoot, "./js/science.js")));
+  await import(resolve(join(gameRoot, "./js/space.js")));
   await import(resolve(join(gameRoot, "./js/village.js")));
   await import(resolve(join(gameRoot, "./js/workshop.js")));
 
