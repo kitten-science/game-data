@@ -25,7 +25,7 @@ test:
 	@echo "There are no tests here :'("
 
 run: output kittensgame
-	node output/main.js kittensgame
+	@cd lib; node ../output/main.js ../kittensgame
 
 data: output kittensgame
 	@mkdir data

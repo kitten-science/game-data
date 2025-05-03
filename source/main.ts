@@ -6,6 +6,7 @@ import type {
   UnsafeBuilding,
   UnsafeCraft,
   UnsafeJob,
+  UnsafePerk,
   UnsafePolicy,
   UnsafeRace,
   UnsafeReligionUpgrade,
@@ -25,6 +26,7 @@ const metadataToHash = (
     | UnsafeBuilding
     | UnsafeCraft
     | UnsafeJob
+    | UnsafePerk
     | UnsafePolicy
     | UnsafeRace
     | UnsafeReligionUpgrade
@@ -42,21 +44,26 @@ const dumpAnyToFile = (filename: string, content: unknown) => {
   writeFileSync(filenameSuffixed, payload);
 };
 
+const fragments = [
+  "achievements",
+  "badges",
+  "buildings",
+  "crafts",
+  "jobs",
+  "races",
+  "perks",
+  "policies",
+  "religionUpgrades",
+  "techs",
+  "transcendenceUpgrades",
+  "upgrades",
+  "zebraUpgrades",
+  "zigguratUpgrades",
+];
+
 const index = [
-  `import achievements from "./achievements.js";`,
-  `import badges from "./badges.js";`,
-  `import buildings from "./buildings.js";`,
-  `import crafts from "./crafts.js";`,
-  `import jobs from "./jobs.js";`,
-  `import races from "./races.js";`,
-  `import policies from "./policies.js";`,
-  `import religionUpgrades from "./religionUpgrades.js";`,
-  `import techs from "./techs.js";`,
-  `import transcendenceUpgrades from "./transcendenceUpgrades.js";`,
-  `import upgrades from "./upgrades.js";`,
-  `import zebraUpgrades from "./zebraUpgrades.js";`,
-  `import zigguratUpgrades from "./zigguratUpgrades.js";`,
-  "export { achievements, badges, buildings, crafts, jobs, policies, races, religionUpgrades, techs, transcendenceUpgrades, upgrades, zebraUpgrades, zigguratUpgrades };\n",
+  ...fragments.map(_ => `import ${_} from "./${_}.js";`),
+  `export { ${fragments.join(",")} };\n`,
 ];
 
 const gameRoot = process.argv[2];
@@ -81,6 +88,7 @@ const main = async () => {
             buildingsData?: Array<UnsafeBuilding>;
             crafts?: Array<UnsafeCraft>;
             jobs?: Array<UnsafeJob>;
+            perks?: Array<UnsafePerk>;
             policies?: Array<UnsafePolicy>;
             races?: Array<UnsafeRace>;
             religionUpgrades?: Array<UnsafeReligionUpgrade>;
@@ -103,6 +111,10 @@ const main = async () => {
 
             case "classes.managers.DiplomacyManager":
               dumpAnyToFile("races", metadataToHash(mustExist(decl.races)));
+              break;
+
+            case "classes.managers.PrestigeManager":
+              dumpAnyToFile("perks", metadataToHash(mustExist(decl.perks)));
               break;
 
             case "classes.managers.ReligionManager":
@@ -138,6 +150,7 @@ const main = async () => {
   await import(resolve(join(gameRoot, "./js/achievements.js")));
   await import(resolve(join(gameRoot, "./js/buildings.js")));
   await import(resolve(join(gameRoot, "./js/diplomacy.js")));
+  await import(resolve(join(gameRoot, "./js/prestige.js")));
   await import(resolve(join(gameRoot, "./js/religion.js")));
   await import(resolve(join(gameRoot, "./js/science.js")));
   await import(resolve(join(gameRoot, "./js/village.js")));
