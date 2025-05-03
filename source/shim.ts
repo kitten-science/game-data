@@ -1,8 +1,8 @@
-export const shimScience = {
+export const shim = {
   classes: {
     diplomacy: { ui: { RacePanel: null } },
     Metadata: null,
-    ui: { btn: { BuildingBtnModernController: null } },
+    ui: { btn: { BuildingBtnModernController: null }, space: { PlanetPanel: null } },
     village: { ui: { VillageButtonController: null } },
   },
   com: {

@@ -20,7 +20,7 @@ import type {
   UnsafeZigguratUpgrade,
 } from "@kitten-science/kitten-scientists/types/index.js";
 import { mustExist } from "@oliversalzburg/js-utils/data/nil.js";
-import { shimScience } from "./shim-science.js";
+import { shim } from "./shim.js";
 
 const metadataToHash = (
   root: Array<
@@ -164,7 +164,7 @@ const main = async () => {
         },
       },
     },
-    shimScience,
+    shim,
   );
 
   await import(resolve(join(gameRoot, "./js/achievements.js")));
