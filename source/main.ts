@@ -44,10 +44,15 @@ const metadataToHash = (
     | UnsafeZigguratUpgrade
   >,
 ) => Object.fromEntries(root.map(_ => [_.name, _]));
-const dumpAnyToFile = (filename: string, content: unknown) => {
+
+const licenseRaw = readFileSync("../LICENSE", "utf8");
+const dumpAnyToFile = (filename: string, content: Record<string, unknown>) => {
   const hashJson = JSON.stringify(content, undefined, 4);
-  const filenameSuffixed = `${filename}.${fileFormat === "esm" ? "js" : "json"}`;
-  const payload = fileFormat === "esm" ? `export default ${hashJson};\n` : `${hashJson}\n`;
+  const filenameSuffixed = `${filename}.js`;
+  const payload = `// \n${licenseRaw
+    .split("\n")
+    .map(_ => `// ${_}`)
+    .join("\n")}\n\nexport default ${hashJson};\n`;
   writeFileSync(filenameSuffixed, payload);
 };
 
@@ -77,7 +82,6 @@ const index = [
 
 const gameRoot = process.argv[2];
 const args = process.argv.slice(3);
-const fileFormat = args.includes("--json") ? "json" : "esm";
 
 const main = async () => {
   const literalsRaw = readFileSync(join(gameRoot, "./res/i18n/en.json"), "utf8");
@@ -184,9 +188,7 @@ const main = async () => {
   await processModule("js/village.js");
   await processModule("js/workshop.js");
 
-  if (fileFormat === "esm") {
-    writeFileSync("index.js", index.join("\n"));
-  }
+  writeFileSync("index.js", index.join("\n"));
   process.stderr.write("Done.\n");
 };
 

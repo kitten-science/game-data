@@ -1,11 +1,11 @@
 .PHONY: default build clean docs git-hook pretty lint test run
 
-default: build data lib
+default: build lib
 
 build: output
 
 clean:
-	rm --force --recursive data kittensgame node_modules output tsconfig.tsbuildinfo
+	rm --force --recursive kittensgame node_modules output tsconfig.tsbuildinfo
 
 docs:
 	@echo "No documentation included by default."
@@ -25,10 +25,6 @@ test: run
 
 run: output kittensgame
 	@cd lib; node ../output/main.js ../kittensgame
-
-data: output kittensgame
-	@mkdir data
-	cd data; node ../output/main.js ../kittensgame --json
 
 lib: output kittensgame
 	@mkdir lib || true
