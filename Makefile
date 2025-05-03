@@ -21,8 +21,7 @@ lint: node_modules
 	yarn biome check .
 	yarn tsc --noEmit
 
-test:
-	@echo "There are no tests here :'("
+test: run
 
 run: output kittensgame
 	@cd lib; node ../output/main.js ../kittensgame
