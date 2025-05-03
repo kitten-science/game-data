@@ -5,6 +5,7 @@ import type {
   UnsafeAchievement,
   UnsafeBadge,
   UnsafeBuilding,
+  UnsafeChronoForgeUpgrade,
   UnsafeCraft,
   UnsafeJob,
   UnsafePact,
@@ -17,6 +18,7 @@ import type {
   UnsafeTech,
   UnsafeTranscendenceUpgrade,
   UnsafeUpgrade,
+  UnsafeVoidSpaceUpgrade,
   UnsafeZebraUpgrade,
   UnsafeZigguratUpgrade,
 } from "@kitten-science/kitten-scientists/types/index.js";
@@ -28,6 +30,7 @@ const metadataToHash = (
     | UnsafeAchievement
     | UnsafeBadge
     | UnsafeBuilding
+    | UnsafeChronoForgeUpgrade
     | UnsafeCraft
     | UnsafeJob
     | UnsafePact
@@ -40,6 +43,7 @@ const metadataToHash = (
     | UnsafeTech
     | UnsafeTranscendenceUpgrade
     | UnsafeUpgrade
+    | UnsafeVoidSpaceUpgrade
     | UnsafeZebraUpgrade
     | UnsafeZigguratUpgrade
   >,
@@ -60,17 +64,19 @@ const fragments = [
   "achievements",
   "badges",
   "buildings",
+  "chronoforgeUpgrades",
   "crafts",
   "jobs",
-  "races",
   "perks",
   "planets",
   "policies",
   "programs",
+  "races",
   "religionUpgrades",
   "techs",
   "transcendenceUpgrades",
   "upgrades",
+  "voidspaceUpgrades",
   "zebraUpgrades",
   "zigguratUpgrades",
 ];
@@ -99,6 +105,7 @@ const main = async () => {
             achievements?: Array<UnsafeAchievement>;
             badges?: Array<UnsafeBadge>;
             buildingsData?: Array<UnsafeBuilding>;
+            chronoforgeUpgrades?: Array<UnsafeChronoForgeUpgrade>;
             crafts?: Array<UnsafeCraft>;
             jobs?: Array<UnsafeJob>;
             pacts?: Array<UnsafePact>;
@@ -109,10 +116,11 @@ const main = async () => {
             races?: Array<UnsafeRace>;
             religionUpgrades?: Array<UnsafeReligionUpgrade>;
             techs?: Array<UnsafeTech>;
+            transcendenceUpgrades?: Array<UnsafeTranscendenceUpgrade>;
             upgrades?: Array<UnsafeUpgrade>;
+            voidspaceUpgrades?: Array<UnsafeVoidSpaceUpgrade>;
             zebraUpgrades?: Array<UnsafeZebraUpgrade>;
             zigguratUpgrades?: Array<UnsafeZigguratUpgrade>;
-            transcendenceUpgrades?: Array<UnsafeTranscendenceUpgrade>;
           },
         ) => {
           switch (id) {
@@ -156,6 +164,14 @@ const main = async () => {
               dumpAnyToFile("planets", metadataToHash(mustExist(decl.planets)));
               break;
 
+            case "classes.managers.TimeManager":
+              dumpAnyToFile(
+                "chronoforgeUpgrades",
+                metadataToHash(mustExist(decl.chronoforgeUpgrades)),
+              );
+              dumpAnyToFile("voidspaceUpgrades", metadataToHash(mustExist(decl.voidspaceUpgrades)));
+              break;
+
             case "classes.managers.VillageManager":
               dumpAnyToFile("jobs", metadataToHash(mustExist(decl.jobs)));
               break;
@@ -185,6 +201,7 @@ const main = async () => {
   await processModule("js/religion.js");
   await processModule("js/science.js");
   await processModule("js/space.js");
+  await processModule("js/time.js");
   await processModule("js/village.js");
   await processModule("js/workshop.js");
 
