@@ -9,6 +9,6 @@ esbuild
     format: "esm",
     outfile: "./output/main.js",
     platform: "node",
-    target: "node20",
+    target: "node18",
   })
   .catch(redirectErrorsToConsole(console));

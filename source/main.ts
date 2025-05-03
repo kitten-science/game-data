@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path/posix";
+import { pathToFileURL } from "node:url";
 import type {
   UnsafeAchievement,
   UnsafeBadge,
@@ -79,7 +80,7 @@ const args = process.argv.slice(3);
 const fileFormat = args.includes("--json") ? "json" : "esm";
 
 const main = async () => {
-  const literalsRaw = readFileSync(resolve(join(gameRoot, "./res/i18n/en.json")), "utf8");
+  const literalsRaw = readFileSync(join(gameRoot, "./res/i18n/en.json"), "utf8");
   const literals = JSON.parse(literalsRaw);
 
   Object.assign(
@@ -167,15 +168,21 @@ const main = async () => {
     shim,
   );
 
-  await import(resolve(join(gameRoot, "./js/achievements.js")));
-  await import(resolve(join(gameRoot, "./js/buildings.js")));
-  await import(resolve(join(gameRoot, "./js/diplomacy.js")));
-  await import(resolve(join(gameRoot, "./js/prestige.js")));
-  await import(resolve(join(gameRoot, "./js/religion.js")));
-  await import(resolve(join(gameRoot, "./js/science.js")));
-  await import(resolve(join(gameRoot, "./js/space.js")));
-  await import(resolve(join(gameRoot, "./js/village.js")));
-  await import(resolve(join(gameRoot, "./js/workshop.js")));
+  const processModule = async (entrypoint: string) => {
+    const subject = pathToFileURL(join(gameRoot, entrypoint)).toString();
+    process.stderr.write(`Loading '${subject}'...\n`);
+    await import(subject);
+  };
+
+  await processModule("js/achievements.js");
+  await processModule("js/buildings.js");
+  await processModule("js/diplomacy.js");
+  await processModule("js/prestige.js");
+  await processModule("js/religion.js");
+  await processModule("js/science.js");
+  await processModule("js/space.js");
+  await processModule("js/village.js");
+  await processModule("js/workshop.js");
 
   if (fileFormat === "esm") {
     writeFileSync("index.js", index.join("\n"));
