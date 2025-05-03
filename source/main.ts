@@ -6,6 +6,7 @@ import type {
   UnsafeBuilding,
   UnsafeCraft,
   UnsafeJob,
+  UnsafePact,
   UnsafePerk,
   UnsafePolicy,
   UnsafeRace,
@@ -26,6 +27,7 @@ const metadataToHash = (
     | UnsafeBuilding
     | UnsafeCraft
     | UnsafeJob
+    | UnsafePact
     | UnsafePerk
     | UnsafePolicy
     | UnsafeRace
@@ -88,6 +90,7 @@ const main = async () => {
             buildingsData?: Array<UnsafeBuilding>;
             crafts?: Array<UnsafeCraft>;
             jobs?: Array<UnsafeJob>;
+            pacts?: Array<UnsafePact>;
             perks?: Array<UnsafePerk>;
             policies?: Array<UnsafePolicy>;
             races?: Array<UnsafeRace>;
@@ -111,6 +114,10 @@ const main = async () => {
 
             case "classes.managers.DiplomacyManager":
               dumpAnyToFile("races", metadataToHash(mustExist(decl.races)));
+              break;
+
+            case "classes.religion.pactsManager":
+              dumpAnyToFile("pacts", metadataToHash(mustExist(decl.pacts)));
               break;
 
             case "classes.managers.PrestigeManager":
