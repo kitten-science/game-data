@@ -328,7 +328,7 @@ __metadata:
   resolution: "@kitten-science/game-data@workspace:."
   dependencies:
     "@biomejs/biome": "npm:2.0.0-beta.2"
-    "@kitten-science/kitten-scientists": "npm:2.0.0-beta.11-dev-be64817"
+    "@kitten-science/kitten-scientists": "npm:2.0.0-beta.11-dev-d602525"
     "@oliversalzburg/js-utils": "npm:0.3.0"
     "@types/chai": "npm:5.2.2"
     "@types/mocha": "npm:10.0.10"
@@ -341,15 +341,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@kitten-science/kitten-scientists@npm:2.0.0-beta.11-dev-be64817":
-  version: 2.0.0-beta.11-dev-be64817
-  resolution: "@kitten-science/kitten-scientists@npm:2.0.0-beta.11-dev-be64817"
+"@kitten-science/kitten-scientists@npm:2.0.0-beta.11-dev-d602525":
+  version: 2.0.0-beta.11-dev-d602525
+  resolution: "@kitten-science/kitten-scientists@npm:2.0.0-beta.11-dev-d602525"
   dependencies:
     "@oliversalzburg/js-utils": "npm:0.3.0"
     date-fns: "npm:4.1.0"
     semver: "npm:7.7.1"
     tslib: "npm:2.8.1"
-  checksum: 10c0/30a06df173801db135b7ef4c179a9ccbd6b2d59e8ffd39a0756240694581c7ef8012b5706f8b3dba9085d573b9e7e59b705ad60b55fc41b7b965203d84593f08
+  checksum: 10c0/0ae7b57a9116163cbc61d62caa48d41963dd22f6f10e6e762b6af674427e2de992a2c847848089e56ed757bb166f923aaf55c30d4c3c1046557367f09de28b25
   languageName: node
   linkType: hard
 
