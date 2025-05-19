@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.0.0-beta.4",
-    "@kitten-science/kitten-scientists": "2.0.0-beta.11-dev-d602525",
+    "@kitten-science/kitten-scientists": "2.0.0-beta.11-nightly.20250519",
     "@oliversalzburg/js-utils": "0.3.0",
     "@types/chai": "5.2.2",
     "@types/mocha": "10.0.10",

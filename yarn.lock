@@ -328,7 +328,7 @@ __metadata:
   resolution: "@kitten-science/game-data@workspace:."
   dependencies:
     "@biomejs/biome": "npm:2.0.0-beta.4"
-    "@kitten-science/kitten-scientists": "npm:2.0.0-beta.11-dev-d602525"
+    "@kitten-science/kitten-scientists": "npm:2.0.0-beta.11-nightly.20250519"
     "@oliversalzburg/js-utils": "npm:0.3.0"
     "@types/chai": "npm:5.2.2"
     "@types/mocha": "npm:10.0.10"
@@ -341,15 +341,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@kitten-science/kitten-scientists@npm:2.0.0-beta.11-dev-d602525":
-  version: 2.0.0-beta.11-dev-d602525
-  resolution: "@kitten-science/kitten-scientists@npm:2.0.0-beta.11-dev-d602525"
-  dependencies:
-    "@oliversalzburg/js-utils": "npm:0.3.0"
-    date-fns: "npm:4.1.0"
-    semver: "npm:7.7.1"
-    tslib: "npm:2.8.1"
-  checksum: 10c0/0ae7b57a9116163cbc61d62caa48d41963dd22f6f10e6e762b6af674427e2de992a2c847848089e56ed757bb166f923aaf55c30d4c3c1046557367f09de28b25
+"@kitten-science/kitten-scientists@npm:2.0.0-beta.11-nightly.20250519":
+  version: 2.0.0-beta.11-nightly.20250519
+  resolution: "@kitten-science/kitten-scientists@npm:2.0.0-beta.11-nightly.20250519"
+  checksum: 10c0/ffed76f06a90cc08667ddd74b40012b03edc005ad96172c4da9a45d93243fdef7bdc460ac08e6d9dde02d65991be47e52665cdf86e26821c03d76a5a0ef0adda
   languageName: node
   linkType: hard
 
@@ -587,13 +582,6 @@ __metadata:
     shebang-command: "npm:^2.0.0"
     which: "npm:^2.0.1"
   checksum: 10c0/053ea8b2135caff68a9e81470e845613e374e7309a47731e81639de3eaeb90c3d01af0e0b44d2ab9d50b43467223b88567dfeb3262db942dc063b9976718ffc1
-  languageName: node
-  linkType: hard
-
-"date-fns@npm:4.1.0":
-  version: 4.1.0
-  resolution: "date-fns@npm:4.1.0"
-  checksum: 10c0/b79ff32830e6b7faa009590af6ae0fb8c3fd9ffad46d930548fbb5acf473773b4712ae887e156ba91a7b3dc30591ce0f517d69fd83bd9c38650fdc03b4e0bac8
   languageName: node
   linkType: hard
 
@@ -1104,7 +1092,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.7.1, semver@npm:^7.5.3":
+"semver@npm:^7.5.3":
   version: 7.7.1
   resolution: "semver@npm:7.7.1"
   bin:
@@ -1218,13 +1206,6 @@ __metadata:
     glob: "npm:^10.4.1"
     minimatch: "npm:^9.0.4"
   checksum: 10c0/6d67b9af4336a2e12b26a68c83308c7863534c65f27ed4ff7068a56f5a58f7ac703e8fc80f698a19bb154fd8f705cdf7ec347d9512b2c522c737269507e7b263
-  languageName: node
-  linkType: hard
-
-"tslib@npm:2.8.1":
-  version: 2.8.1
-  resolution: "tslib@npm:2.8.1"
-  checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
   languageName: node
   linkType: hard
 
