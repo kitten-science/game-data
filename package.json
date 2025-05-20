@@ -42,9 +42,8 @@
     "kittensgame"
   ],
   "engines": {
-    "node": ">= 18"
+    "node": ">= 20"
   },
-  "packageManager": "yarn@4.9.1",
   "files": [
     "lib"
   ]
