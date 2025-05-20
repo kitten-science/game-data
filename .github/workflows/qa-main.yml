@@ -1,9 +1,0 @@
-name: QA Main
-
-on:
-  workflow_call:
-
-jobs:
-  qa:
-    name: 🔹 QA
-    uses: oliversalzburg/workflows/.github/workflows/qa-npm-package.yml@main

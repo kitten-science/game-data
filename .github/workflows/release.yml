@@ -91,7 +91,7 @@ jobs:
 
   qa:
     name: 🔹 QA
-    uses: ./.github/workflows/qa-main.yml
+    uses: ./.github/workflows/qa.yml
 
   publish-npm:
     if: success() && needs.params.outputs.publish-npm == 'true'
