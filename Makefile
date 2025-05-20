@@ -26,9 +26,16 @@ test: run
 run: output kittensgame
 	@cd lib; node ../output/main.js ../kittensgame
 
-lib: output kittensgame
-	@mkdir lib || true
-	cd lib; node ../output/main.js ../kittensgame
+lib: lib/master
+lib/master: output kittensgame
+	@mkdir -p lib/master || true
+	cd lib/master; node ../../output/main.js ../../kittensgame
+lib/alpha: output kittensgame
+	@mkdir -p lib/alpha || true
+	cd lib/alpha; node ../../output/main.js ../../kittensgame
+lib/beta: output kittensgame
+	@mkdir -p lib/beta || true
+	cd lib/beta; node ../../output/main.js ../../kittensgame
 
 node_modules:
 	npm install

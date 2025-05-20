@@ -19,10 +19,19 @@
   },
   "exports": {
     "./*.js": {
-      "default": "./lib/*.js"
+      "default": "./lib/master/*.js"
+    },
+    "./master/*.js": {
+      "default": "./lib/master/*.js"
+    },
+    "./alpha/*.js": {
+      "default": "./lib/alpha/*.js"
+    },
+    "./beta/*.js": {
+      "default": "./lib/beta/*.js"
     },
     ".": {
-      "default": "./lib/index.js"
+      "default": "./lib/master/index.js"
     }
   },
   "devDependencies": {

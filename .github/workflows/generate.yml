@@ -18,8 +18,8 @@ jobs:
       matrix:
         branch:
           - master
-          - dev/beta
-          - dev/alpha
+          - beta
+          - alpha
     permissions:
       contents: write
       pull-requests: write
@@ -45,9 +45,9 @@ jobs:
 
       - name: Generate Data
         run: |
-          git clone --branch "${{ matrix.branch }}" --depth 1 --single-branch "https://github.com/nuclear-unicorn/kittensgame.git"
-          rm -rf lib
-          make lib
+          git clone --branch "${{ matrix.branch != 'master' && 'dev/' || '' }}${{ matrix.branch }}" --depth 1 --single-branch "https://github.com/nuclear-unicorn/kittensgame.git"
+          rm -rf "lib/${{ matrix.branch }}"
+          make "lib/${{ matrix.branch }}"
           make pretty
 
       - name: Create Pull Request

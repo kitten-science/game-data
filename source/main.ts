@@ -1,4 +1,5 @@
 import { readFileSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { join } from "node:path/posix";
 import { pathToFileURL } from "node:url";
 import type {
@@ -49,7 +50,7 @@ const metadataToHash = (
   >,
 ) => Object.fromEntries(root.map(_ => [_.name, _]));
 
-const licenseRaw = readFileSync("../LICENSE", "utf8");
+const licenseRaw = readFileSync(resolve(import.meta.dirname, "../LICENSE"), "utf8");
 const dumpAnyToFile = (filename: string, content: Record<string, unknown>) => {
   const hashJson = JSON.stringify(content, undefined, 4);
   const filenameSuffixed = `${filename}.js`;
