@@ -84,6 +84,7 @@ const fragments = [
 
 const index = [
   ...fragments.map(_ => `import ${_} from "./${_}.js";`),
+  "",
   `export { ${fragments.join(",")} };\n`,
 ];
 
