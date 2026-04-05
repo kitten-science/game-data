@@ -92,6 +92,9 @@ jobs:
   qa:
     name: 🔹 QA
     uses: ./.github/workflows/qa.yml
+    permissions:
+      contents: read
+      packages: read
 
   publish-npm:
     if: success() && needs.params.outputs.publish-npm == 'true'

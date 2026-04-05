@@ -106,6 +106,9 @@ jobs:
     needs:
       - changelog
     uses: ./.github/workflows/qa.yml
+    permissions:
+      contents: read
+      packages: read
 
   publish-npm:
     if: success() && needs.params.outputs.publish-npm == 'true' && needs.changelog.outputs.has-changed == 'true'
