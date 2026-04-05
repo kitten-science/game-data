@@ -5,7 +5,8 @@
 			"recommended": true,
 			"source": {
 				"organizeImports": "on",
-				"recommended": true
+				"recommended": true,
+				"useSortedKeys": "on"
 			}
 		},
 		"enabled": true
@@ -28,17 +29,17 @@
 		"ignoreUnknown": true,
 		"includes": ["**", "!kittensgame", "!node_modules", "!output"]
 	},
-	"json": {
-		"formatter": {
-			"enabled": true
-		}
-	},
 	"html": {
 		"formatter": {
 			"enabled": true
 		},
 		"linter": {
 			"enabled": false
+		}
+	},
+	"json": {
+		"formatter": {
+			"enabled": true
 		}
 	},
 	"linter": {

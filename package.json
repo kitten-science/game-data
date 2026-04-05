@@ -1,38 +1,8 @@
 {
 	"$schema": "https://json.schemastore.org/package.json",
-	"name": "@kitten-science/game-data",
-	"version": "1.2.0",
-	"license": "CC-BY-NC-ND-4.0",
 	"author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
-	"homepage": "https://github.com/kitten-science/game-data",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/kitten-science/game-data.git"
-	},
 	"bugs": {
 		"url": "https://github.com/kitten-science/game-data/issues"
-	},
-	"type": "module",
-	"scripts": {
-		"preversion": "make lint test",
-		"postversion": "git push"
-	},
-	"exports": {
-		"./*.js": {
-			"default": "./lib/master/*.js"
-		},
-		"./master/*.js": {
-			"default": "./lib/master/*.js"
-		},
-		"./alpha/*.js": {
-			"default": "./lib/alpha/*.js"
-		},
-		"./beta/*.js": {
-			"default": "./lib/beta/*.js"
-		},
-		".": {
-			"default": "./lib/master/index.js"
-		}
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.8",
@@ -42,14 +12,44 @@
 		"esbuild": "0.27.4",
 		"typescript": "5.9.3"
 	},
-	"keywords": [
-		"kittensgame"
-	],
 	"engines": {
 		"node": ">= 22",
 		"npm": ">= 11"
 	},
+	"exports": {
+		".": {
+			"default": "./lib/master/index.js"
+		},
+		"./*.js": {
+			"default": "./lib/master/*.js"
+		},
+		"./alpha/*.js": {
+			"default": "./lib/alpha/*.js"
+		},
+		"./beta/*.js": {
+			"default": "./lib/beta/*.js"
+		},
+		"./master/*.js": {
+			"default": "./lib/master/*.js"
+		}
+	},
 	"files": [
 		"lib"
-	]
+	],
+	"homepage": "https://github.com/kitten-science/game-data",
+	"keywords": [
+		"kittensgame"
+	],
+	"license": "CC-BY-NC-ND-4.0",
+	"name": "@kitten-science/game-data",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kitten-science/game-data.git"
+	},
+	"scripts": {
+		"postversion": "git push",
+		"preversion": "make lint test"
+	},
+	"type": "module",
+	"version": "1.2.0"
 }
