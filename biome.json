@@ -5,8 +5,7 @@
 			"recommended": true,
 			"source": {
 				"organizeImports": "on",
-				"recommended": true,
-				"useSortedKeys": "off"
+				"recommended": true
 			}
 		},
 		"enabled": true
