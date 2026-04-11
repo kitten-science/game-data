@@ -5,7 +5,7 @@
 		"url": "https://github.com/kitten-science/game-data/issues"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.10",
+		"@biomejs/biome": "2.4.11",
 		"@kitten-science/kitten-scientists": "2.0.0-beta.12-nightly.20260315",
 		"@oliversalzburg/js-utils": "0.6.0",
 		"@types/node": "25.5.2",
