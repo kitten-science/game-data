@@ -31,6 +31,15 @@ concurrency:
   group: release
   cancel-in-progress: false
 
+permissions:
+  actions: write
+  attestations: write
+  contents: write
+  id-token: write
+  packages: write
+  pages: write
+  pull-requests: read
+
 env:
   # renovate: datasource=node-version depName=node versioning=node
   NODE_VERSION: "24.14.0"
@@ -110,7 +119,7 @@ jobs:
       pages: write
       pull-requests: read
     secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NPM_TOKEN: ${{ github.token }}
     uses: oliversalzburg/workflows/.github/workflows/frag-publish-npm.yml@main
     with:
       dist-tag: ${{ needs.params.outputs.release-tag }}
