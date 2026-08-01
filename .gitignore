@@ -5,3 +5,4 @@ kittensgame/
 node_modules/
 output/
 tsconfig.tsbuildinfo
+lib/*.js
