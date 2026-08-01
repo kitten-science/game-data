@@ -1,5 +1,8 @@
 {
 	"$schema": "https://json.schemastore.org/package.json",
+	"allowScripts": {
+		"esbuild": true
+	},
 	"author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
 	"bugs": {
 		"url": "https://github.com/kitten-science/game-data/issues"
