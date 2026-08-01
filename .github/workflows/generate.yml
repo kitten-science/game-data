@@ -9,7 +9,6 @@ on:
 concurrency: publish
 
 env:
-  # renovate: datasource=node-version depName=node versioning=node
   NODE_VERSION: "24.14.0"
 
 jobs:
