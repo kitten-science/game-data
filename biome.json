@@ -1,11 +1,11 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.5.11/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
 	"assist": {
 		"actions": {
-			"recommended": true,
+			"preset": "recommended",
 			"source": {
 				"organizeImports": "on",
-				"recommended": true,
+				"preset": "recommended",
 				"useSortedKeys": "on"
 			}
 		},
@@ -27,7 +27,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!kittensgame", "!node_modules", "!output"]
+		"includes": ["**", "!*.md", "!kittensgame", "!node_modules", "!output"]
 	},
 	"html": {
 		"formatter": {
